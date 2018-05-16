@@ -27,7 +27,7 @@ def frequences() :
     return table
 
 F = frequences()
-print(F)
+#print(F)
 
 ###  la classe Arbre
 
@@ -47,7 +47,16 @@ class Arbre :
 ###  Ex.1  construction de l'arbre d'Huffamn utilisant la structure de "tas binaire"
 def arbre_huffman(frequences) :
     # à compléter
+    heap = []
+    for carac, freq in frequences.items():
+        heappush(heap, [freq, carac, Arbre(carac, None, None)])
+    
+    while heap:
+        print(heappop(heap))
 
+arbre_huffman(F)
+    
+"""
 ###  Ex.2  construction du code d'Huffamn
 
 def parcours(arbre,prefixe,code) :    
@@ -78,3 +87,4 @@ def decodage(arbre,fichierCompresse) :
 
 decode = decodage(H,'leHorlaEncoded.txt')
 print(decode)
+"""
