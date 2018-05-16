@@ -29,7 +29,7 @@ def frequences() :
     return table
 
 F = frequences()
-print(F)
+#print(F)
 
 ###  la classe Arbre
 
@@ -56,7 +56,16 @@ def arbre_huffman(frequences) :
         
     return ""
     # à compléter
+    heap = []
+    for carac, freq in frequences.items():
+        heappush(heap, [freq, carac, Arbre(carac, None, None)])
+    
+    while heap:
+        print(heappop(heap))
 
+arbre_huffman(F)
+    
+"""
 ###  Ex.2  construction du code d'Huffamn
 
 def parcours(arbre,prefixe,code) :    
@@ -80,15 +89,7 @@ def encodage(dico,fichier) :
 #print(encode)
 
 
-###  Ex.4  décodage d'un fichier compresse
+decode = decodage(H,'leHorlaEncoded.txt')
+print(decode)
+"""
 
-def decodage(arbre,fichierCompresse) :
-    return
-    # à compléter
-
-for element in F:
-    print(element)
-#decode = decodage(H,'leHorlaEncoded.txt')
-#print(decode)
-
-arbre_huffman(F)
