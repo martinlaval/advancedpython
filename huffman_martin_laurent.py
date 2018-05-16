@@ -61,6 +61,7 @@ arbre_huffman(F)
 
 def parcours(arbre,prefixe,code) :    
     # à compléter
+    
 
 def code_huffman(arbre) :
     # on remplit le dictionnaire du code d'Huffman en parcourant l'arbre
