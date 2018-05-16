@@ -49,14 +49,6 @@ class Arbre :
 ###  Ex.1  construction de l'arbre d'Huffamn utilisant la structure de "tas binaire"
 def arbre_huffman(frequences) :
     heap = []
-    for element in frequences : 
-        print(element)
-        print(frequences[element])
-        heappush(heap, {frequences[element], element, Arbre()})
-        
-    return ""
-    # à compléter
-    heap = []
     for carac, freq in frequences.items():
         heappush(heap, [freq, carac, Arbre(carac, None, None)])
     
