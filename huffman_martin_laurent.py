@@ -51,6 +51,16 @@ def arbre_huffman(frequences) :
     for carac, freq in frequences.items():
         heappush(heap, [freq, carac, Arbre(carac, None, None)])
     
+    while len(heap) > 1:
+        triplet1 = heappop(heap)
+        triplet2 = heappop(heap)
+        additionFreq = triplet1[0] + triplet2[0]
+        concatEtiquette = triplet1[1] + triplet2[1]
+        tripletFinal = [additionFreq, concatEtiquette, Arbre(concatEtiquette, triplet1, triplet2)]
+        print(tripletFinal)
+        heappush(heap, tripletFinal)
+    print("\n")
+    
     while heap:
         print(heappop(heap))
 
