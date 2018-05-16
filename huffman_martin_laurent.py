@@ -1,3 +1,4 @@
+#!/usr/bin/python3.4;
 #####################################################
 ######  Introduction à la cryptographie  	###
 #####   Codes de Huffman             		###
@@ -23,6 +24,7 @@ def frequences() :
     table = {}
     n = len(caracteres)
     for i in range(n) :
+        print(caracteres[i], proba[i])
         table[caracteres[i]] = proba[i]
     return table
 
@@ -46,11 +48,19 @@ class Arbre :
 
 ###  Ex.1  construction de l'arbre d'Huffamn utilisant la structure de "tas binaire"
 def arbre_huffman(frequences) :
+    heap = []
+    for element in frequences : 
+        print(element)
+        print(frequences[element])
+        heappush(heap, {frequences[element], element, Arbre()})
+        
+    return ""
     # à compléter
 
 ###  Ex.2  construction du code d'Huffamn
 
 def parcours(arbre,prefixe,code) :    
+    return
     # à compléter
 
 def code_huffman(arbre) :
@@ -60,21 +70,25 @@ def code_huffman(arbre) :
     return code
 
 
-
-
 ###  Ex.3  encodage d'un texte contenu dans un fichier
 
 def encodage(dico,fichier) :
+    return 
     # à compléter
 
-encode = encodage(dico,'leHorla.txt')
-print(encode)
+#encode = encodage(dico,'leHorla.txt')
+#print(encode)
 
 
 ###  Ex.4  décodage d'un fichier compresse
 
 def decodage(arbre,fichierCompresse) :
+    return
     # à compléter
 
-decode = decodage(H,'leHorlaEncoded.txt')
-print(decode)
+for element in F:
+    print(element)
+#decode = decodage(H,'leHorlaEncoded.txt')
+#print(decode)
+
+arbre_huffman(F)
