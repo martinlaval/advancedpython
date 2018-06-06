@@ -28,9 +28,6 @@ def frequences() :
         table[caracteres[i]] = proba[i]
     return table
 
-F = frequences()
-#print(F)
-
 ###  la classe Arbre
 
 class Arbre :
@@ -58,41 +55,59 @@ def arbre_huffman(frequences) :
         additionFreq = triplet1[0] + triplet2[0]
         concatEtiquette = triplet1[1] + triplet2[1]
         tripletFinal = [additionFreq, concatEtiquette, Arbre(concatEtiquette, triplet1, triplet2)]
-        print(tripletFinal)
+        #print(tripletFinal)
         heappush(heap, tripletFinal)
     print("\n")
-    
-    while heap:
-        print(heappop(heap))
 
-arbre_huffman(F)
-    
-"""
-###  Ex.2  construction du code d'Huffamn
+    return heappop(heap)[2]
 
-def parcours(arbre,prefixe,code) :    
-    return
-    # à compléter
-    
+###  Ex.2  construction ducode d'Huffamn
 
+def parcours(arbre, prefixe, code):
+    if arbre.estFeuille():
+       code[arbre.lettre] = prefixe
+    else:
+        parcours(arbre.gauche[2], prefixe + "0", code)
+        parcours(arbre.droit[2], prefixe + "1", code)
+        
 def code_huffman(arbre) :
     # on remplit le dictionnaire du code d'Huffman en parcourant l'arbre
     code = {}
-    parcours(arbre,'',code)
+    parcours(arbre, "", code)
     return code
 
 
 ###  Ex.3  encodage d'un texte contenu dans un fichier
 
 def encodage(dico,fichier) :
-    return 
-    # à compléter
+    f_read  = open(fichier, "r")
+    contenu = f_read.read()
+    f_write = open("compressed_file","w")
+    suite_caracteres = ""
+    for caractere in contenu:
+        if caractere not in dico:
+            caractere = ' '
+        suite_bits += chr(dico[caractere])
+    print(suite_bits)
+    #f_write.write(bin(int(dico[caractere], 2)))
+    #f_write.close()
+    #f_read.close()
+    
+    #return 
 
 #encode = encodage(dico,'leHorla.txt')
 #print(encode)
 
-
+"""
 decode = decodage(H,'leHorlaEncoded.txt')
 print(decode)
 """
 
+def main():
+    F = frequences()
+    arbre = arbre_huffman(F)
+    code = code_huffman(arbre)
+    print(code)
+    encodage(code, "leHorla.txt")
+
+main()
