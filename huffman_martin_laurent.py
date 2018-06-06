@@ -5,6 +5,7 @@
 ####################################################
 
 from heapq import *
+import binascii
 
 ###  distribution de proba sur les letrres
 
@@ -79,24 +80,70 @@ def code_huffman(arbre) :
 
 ###  Ex.3  encodage d'un texte contenu dans un fichier
 
-def encodage(dico,fichier) :
+def encodage(dico,fichier):
     f_read  = open(fichier, "r")
     contenu = f_read.read()
-    f_write = open("compressed_file","w")
-    suite_caracteres = ""
+    f_write = open("compressed_file.txt","wb")
+    suite_bits = ""
+
     for caractere in contenu:
         if caractere not in dico:
             caractere = ' '
-        suite_bits += chr(dico[caractere])
-    print(suite_bits)
-    #f_write.write(bin(int(dico[caractere], 2)))
-    #f_write.close()
-    #f_read.close()
+        suite_bits += dico[caractere]
     
-    #return 
+    nbre0 = 0
 
-#encode = encodage(dico,'leHorla.txt')
-#print(encode)
+    while len(suite_bits) % 8 != 0:
+        suite_bits += "0"
+        nbre0 = nbre0 + 1
+    
+    octet = ""
+
+    suite_char=""
+    if(nbre0 > 0):
+        suite_bits += format(nbre0, '08b')
+
+    print(suite_bits)
+    
+    for bit in suite_bits:
+        if len(octet) != 8:
+            octet += bit
+        elif len(octet) == 8:
+            suite_char += chr(int(octet, 2))
+            octet = bit
+    suite_char += chr(int(octet,2)) # rajout du dernier octet
+            
+            
+    f_write.write(suite_char.encode('utf8'))
+    f_write.close()
+    f_read.close()
+
+def decodage(dico,fichier):
+    f_read  = open(fichier, "rb")
+    suite_char = f_read.read()
+    f_write = open("decoded_file.txt","w")
+    suite_char = suite_char.decode('utf8')
+    suite_bits = ""
+    for char in suite_char:
+        integer = ord(char)
+        #print(integer)
+        #print(format(integer, '08b'))
+        suite_bits+=format(integer, '08b')
+    nbreBitsADegager = 8 + int(suite_bits[-8:], 2)
+    suite_bits = suite_bits[:-nbreBitsADegager]
+    print(suite_bits)
+    
+    binlettre = ""
+    str=""
+    for elt in suite_bits:
+        binlettre = binlettre + elt
+        for i in dico:
+            if dico[i] == binlettre:
+                str+=i
+                binlettre = ""
+    f_write.write(str)
+    f_read.close()
+    f_write.close()
 
 """
 decode = decodage(H,'leHorlaEncoded.txt')
@@ -109,5 +156,8 @@ def main():
     code = code_huffman(arbre)
     print(code)
     encodage(code, "leHorla.txt")
+    print("decodage")
+    decodage(code, "compressed_file.txt")
+    
 
 main()
